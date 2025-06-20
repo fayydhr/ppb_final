@@ -7,4 +7,10 @@
     <string name="name">Name</string>
     <string name="add_workout">Add Workout</string>
     <string name="save">Save</string>
+    <string-array name="weeks_array">
+        <item>Weeks</item>
+        <item>Last Week</item>
+        <item>Last Month</item>
+    </string-array>
 </resources>
+

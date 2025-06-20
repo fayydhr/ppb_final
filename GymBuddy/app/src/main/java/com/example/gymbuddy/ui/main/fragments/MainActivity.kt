@@ -1,5 +1,6 @@
 package com.example.gymbuddy.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.example.gymbuddy.data.local.GymDatabase
 import com.example.gymbuddy.data.repository.UserRepository
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import com.example.gymbuddy.ui.main.fragments.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,36 +37,44 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // Load user data for personalized welcome
+        // Load user data for personalized welcome - adjust for HomeFragment header
         loadAndSetWelcomeMessage(currentUserId)
 
-        // Set initial fragment (e.g., Recent Workout)
+        // Set initial fragment to HomeFragment
         if (savedInstanceState == null) { // Only add fragment if not restoring state
-            replaceFragment(WorkoutListFragment(), currentUserId)
-            binding.bottomNavigationView.selectedItemId = R.id.navigation_workouts // Set selected item
+            replaceFragment(HomeFragment(), currentUserId)
+            binding.bottomNavigation.selectedItemId = R.id.navigation_home // Menggunakan binding.bottomNavigation
         }
 
-
         setupBottomNavigation()
+
+        // Handle FAB click
+        binding.fabAdd.setOnClickListener { // Menggunakan binding.fabAdd
+            // Logika untuk tombol tambah (mungkin membuka WorkoutLogActivity atau dialog)
+            val intent = Intent(this, com.example.gymbuddy.ui.workout.WorkoutLogActivity::class.java)
+            intent.putExtra("USER_ID", currentUserId)
+            startActivity(intent)
+        }
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+        binding.bottomNavigation.setOnItemSelectedListener { item -> // Menggunakan binding.bottomNavigation
             when (item.itemId) {
+                R.id.navigation_home -> {
+                    replaceFragment(HomeFragment(), currentUserId)
+                    true
+                }
+                R.id.navigation_activity -> {
+                    // Replace with your Activity/Statistics Fragment
+                    replaceFragment(WorkoutListFragment(), currentUserId) // Untuk sementara pakai WorkoutListFragment
+                    true
+                }
+                R.id.navigation_community -> {
+                    replaceFragment(NewsFragment(), currentUserId) // Untuk sementara pakai NewsFragment
+                    true
+                }
                 R.id.navigation_profile -> {
                     replaceFragment(ProfileFragment(), currentUserId)
-                    true
-                }
-                R.id.navigation_workouts -> {
-                    replaceFragment(WorkoutListFragment(), currentUserId)
-                    true
-                }
-                R.id.navigation_schedules -> {
-                    replaceFragment(ScheduleListFragment(), currentUserId)
-                    true
-                }
-                R.id.navigation_news -> {
-                    replaceFragment(NewsFragment(), currentUserId)
                     true
                 }
                 else -> false
@@ -86,15 +96,14 @@ class MainActivity : AppCompatActivity() {
             try {
                 val userDao = GymDatabase.getDatabase(this@MainActivity).userDao()
                 val userRepository = UserRepository(userDao)
-                val user = userRepository.getUserById(userId) // Needs to be added to UserRepository and UserDao
+                val user = userRepository.getUserById(userId)
                 if (user != null) {
-                    binding.tvWelcome.text = "Welcome, ${user.name}!"
-                } else {
-                    binding.tvWelcome.text = "Welcome, GymBuddy!"
+                    // Anda bisa meneruskan nama pengguna ke HomeFragment jika diperlukan
+                    // val homeFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as? HomeFragment
+                    // homeFragment?.updateUserName(user.name) // Contoh fungsi di HomeFragment
                 }
             } catch (e: Exception) {
                 Log.e("MainActivity", "Error loading user for welcome message: ${e.message}")
-                binding.tvWelcome.text = "Welcome, GymBuddy!"
             }
         }
     }
