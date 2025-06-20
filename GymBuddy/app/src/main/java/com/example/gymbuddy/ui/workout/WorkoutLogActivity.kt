@@ -1,3 +1,4 @@
+// app/src/main/java/com/example/gymbuddy/ui/workout/WorkoutLogActivity.kt
 package com.example.gymbuddy.ui.workout
 
 import android.app.TimePickerDialog
@@ -43,7 +44,7 @@ class WorkoutLogActivity : AppCompatActivity() {
     }
 
     private fun setupSpinners() {
-        // Data dummy untuk dropdown (ganti dengan data dari database jika perlu)
+        // Data dummy for dropdown (replace with data from database if needed)
         val exerciseNames = arrayOf("Bench Press", "Squat", "Deadlift", "Overhead Press", "Barbell Row", "Bicep Curl", "Tricep Extension", "Leg Press", "Lat Pulldown")
         val workoutTypes = arrayOf("Cardio", "Strength", "HIIT", "Flexibility", "Endurance", "Bodyweight")
         val scheduleDays = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -62,7 +63,6 @@ class WorkoutLogActivity : AppCompatActivity() {
     }
 
     private fun setupTimePicker() {
-        // Inisialisasi tampilan waktu awal (waktu saat ini)
         updateTimeDisplay()
 
         binding.btnPickTime.setOnClickListener {
@@ -71,19 +71,18 @@ class WorkoutLogActivity : AppCompatActivity() {
                 selectedTime.set(Calendar.MINUTE, minute)
                 updateTimeDisplay()
             }
-            // Tampilkan TimePickerDialog dengan waktu saat ini sebagai default
             TimePickerDialog(
                 this,
                 timeSetListener,
                 selectedTime.get(Calendar.HOUR_OF_DAY),
                 selectedTime.get(Calendar.MINUTE),
-                false // Setel ke true untuk format 24 jam, false untuk AM/PM
+                false
             ).show()
         }
     }
 
     private fun updateTimeDisplay() {
-        val format = SimpleDateFormat("hh:mm a", Locale.getDefault()) // Format AM/PM
+        val format = SimpleDateFormat("hh:mm a", Locale.getDefault())
         binding.tvSelectedTime.text = format.format(selectedTime.time)
     }
 
@@ -93,9 +92,10 @@ class WorkoutLogActivity : AppCompatActivity() {
                 val exerciseName = binding.spinnerExerciseName.selectedItem.toString()
                 val workoutType = binding.spinnerWorkoutType.selectedItem.toString()
                 val scheduleDay = binding.spinnerScheduleDay.selectedItem.toString()
-                val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(selectedTime.time) // Format waktu 24 jam untuk disimpan
-                val progress = binding.etProgress.text.toString().trim() // Ambil teks dari etProgress
-                // Notes tetap opsional, ambil jika ada atau null
+                val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(selectedTime.time)
+                val progress = binding.etProgress.text.toString().trim()
+                val durationMinutes = binding.etDurationMinutes.text.toString().toIntOrNull() // Get duration
+                val caloriesBurned = binding.etCaloriesBurned.text.toString().toDoubleOrNull() // Get calories
                 val notes = binding.etNotes.text.toString().trim().takeIf { it.isNotBlank() }
 
                 workoutViewModel.addWorkout(
@@ -104,25 +104,23 @@ class WorkoutLogActivity : AppCompatActivity() {
                     workoutType,
                     scheduleDay,
                     time,
-                    progress, // Teruskan progress sebagai String
-                    notes
+                    progress,
+                    notes,
+                    durationMinutes, // Pass duration
+                    caloriesBurned // Pass calories
                 )
-                // ViewModel akan menangani Snackbar dan finish() jika berhasil
+                finish() // Finish the activity after saving
             }
         }
     }
 
     private fun validateInputs(): Boolean {
         var isValid = true
-        // Periksa apakah spinner dipilih (jika ada item "Pilih..." di awal)
-        // Saat ini, dengan ArrayAdapter sederhana, item selalu terpilih.
-        // Validasi utama untuk etProgress
-        if (binding.etProgress.text.isNullOrEmpty()) { // Gunakan etProgress
+        if (binding.etProgress.text.isNullOrEmpty()) {
             binding.etProgress.error = "Progress is required"
             isValid = false
         }
-        // Anda bisa menambahkan validasi lain di sini jika diperlukan
-
+        // Optional: Add more specific validation for duration and calories if needed
         return isValid
     }
 }

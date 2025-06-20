@@ -69,5 +69,8 @@ dependencies {
 // Fragment KTX for easy fragment transactions (if not already there)
     implementation("androidx.fragment:fragment-ktx:1.8.1")
 
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+
 
 }

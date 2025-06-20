@@ -1,3 +1,4 @@
+// app/src/main/java/com/example/gymbuddy/ui/workout/WorkoutViewModel.kt
 package com.example.gymbuddy.ui.workout
 
 import androidx.lifecycle.LiveData
@@ -27,18 +28,18 @@ class WorkoutViewModel(private val workoutRepository: WorkoutRepository) : ViewM
         }
     }
 
-    // Perbarui tanda tangan fungsi untuk menerima field baru
     fun addWorkout(
         userId: Int,
         exerciseName: String,
         workoutType: String,
         scheduleDay: String,
         time: String,
-        progress: String?, // Sekarang ini adalah String
-        notes: String? = null // Tetap opsional
+        progress: String?,
+        notes: String? = null,
+        durationMinutes: Int? = null, // NEW
+        caloriesBurned: Double? = null // NEW
     ) {
         viewModelScope.launch {
-            // Validasi input
             if (exerciseName.isEmpty() || workoutType.isEmpty() || scheduleDay.isEmpty() || time.isEmpty() || progress.isNullOrEmpty()) {
                 _operationResult.postValue(OperationResult.Error("Please fill all required fields: Exercise Name, Workout Type, Schedule Day, Time, and Progress."))
                 return@launch
@@ -50,12 +51,14 @@ class WorkoutViewModel(private val workoutRepository: WorkoutRepository) : ViewM
                 workoutType = workoutType,
                 scheduleDay = scheduleDay,
                 time = time,
-                progress = progress, // Gunakan field progress
-                notes = notes
+                progress = progress,
+                notes = notes,
+                durationMinutes = durationMinutes, // Pass the new field
+                caloriesBurned = caloriesBurned // Pass the new field
             )
             workoutRepository.insertWorkout(workout)
             _operationResult.postValue(OperationResult.Success)
-            loadWorkouts(userId) // Muat ulang workout setelah penambahan
+            loadWorkouts(userId)
         }
     }
 
@@ -63,8 +66,6 @@ class WorkoutViewModel(private val workoutRepository: WorkoutRepository) : ViewM
         viewModelScope.launch {
             workoutRepository.deleteWorkout(workoutId)
             _operationResult.postValue(OperationResult.Success)
-            // Muat ulang workout untuk ID pengguna yang relevan setelah penghapusan
-            // Anda perlu memastikan userId tersedia di ViewModel atau dicari dari data yang ada
             _workouts.value?.let { workouts ->
                 loadWorkouts(workouts.firstOrNull()?.userId ?: -1)
             }
