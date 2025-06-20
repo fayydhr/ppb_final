@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.gymbuddy.data.local.GymDatabase
 import com.example.gymbuddy.data.repository.UserRepository
 import com.example.gymbuddy.databinding.ActivityLoginBinding
-import com.example.gymbuddy.ui.dashboard.DashboardActivity
+import com.example.gymbuddy.ui.main.MainActivity // Ubah import dari DashboardActivity ke MainActivity
 import com.example.gymbuddy.ui.register.RegisterActivity
 import com.example.gymbuddy.utils.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
                 is LoginViewModel.LoginResult.Success -> {
                     val userId = viewModel.getUserId()
                     if (userId != -1) {
-                        startActivity(Intent(this@LoginActivity, DashboardActivity::class.java).apply {
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java).apply { // Navigasi ke MainActivity
                             putExtra("USER_ID", userId)
                         })
                         finish()

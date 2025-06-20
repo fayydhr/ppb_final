@@ -9,9 +9,10 @@ data class Workout(
     val id: Int = 0,
     val userId: Int,
     val exerciseName: String,
-    val sets: Int,
-    val reps: Int,
-    val weight: Float,
+    val workoutType: String, // NEW
+    val scheduleDay: String, // NEW
+    val time: String,        // NEW
+    val progress: String?,   // Changed from sets, reps, weight
     val date: Long = System.currentTimeMillis(),
-    val notes: String? = null
+    val notes: String? = null // Keep notes if you still want them as optional
 )

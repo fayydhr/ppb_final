@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Aku" />
+    <item
+        android:id="@+id/navigation_workouts"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Recent Workout" />
+    <item
+        android:id="@+id/navigation_schedules"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Your Schedule" />
+    <item
+        android:id="@+id/navigation_news"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="News" />
+</menu>

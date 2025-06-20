@@ -9,19 +9,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GymBuddy">
+
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="true">
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false"/>
         <activity android:name=".ui.register.RegisterActivity" />
-        <activity android:name=".ui.dashboard.DashboardActivity" />
         <activity android:name=".ui.workout.WorkoutLogActivity" />
         <activity android:name=".ui.schedule.ScheduleActivity" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="false" />
 
+        <activity
+            android:name=".ui.calori.CalorieCalculatorActivity"
+            android:exported="false" />
 
     </application>
 

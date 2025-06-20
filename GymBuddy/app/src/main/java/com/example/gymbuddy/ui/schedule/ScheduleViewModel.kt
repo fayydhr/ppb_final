@@ -10,12 +10,12 @@ import kotlinx.coroutines.launch
 class ScheduleViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: ScheduleRepository
-    val allSchedules: LiveData<List<Schedule>>
+    val allSchedules: LiveData<List<Schedule>> //
 
     init {
         val scheduleDao = GymDatabase.getDatabase(application).scheduleDao()
         repository = ScheduleRepository(scheduleDao)
-        allSchedules = repository.allSchedules.asLiveData()
+        allSchedules = repository.allSchedules.asLiveData() //
     }
 
     fun insert(schedule: Schedule) = viewModelScope.launch {

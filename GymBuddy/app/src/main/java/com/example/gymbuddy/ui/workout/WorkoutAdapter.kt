@@ -20,10 +20,13 @@ class WorkoutAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(workout: Workout) {
             binding.tvExerciseName.text = workout.exerciseName
-            binding.tvSetsReps.text = "${workout.sets} sets x ${workout.reps} reps"
-            binding.tvWeight.text = "${workout.weight} kg"
+            // Tampilkan workoutType, scheduleDay, dan time
+            binding.tvSetsReps.text = "Type: ${workout.workoutType} | Day: ${workout.scheduleDay}"
+            binding.tvWeight.text = "Time: ${workout.time}"
+            // Tampilkan progress di tempat yang sebelumnya sets/reps/weight
+            binding.tvProgress.text = "Progress: ${workout.progress ?: "N/A"}" // Gunakan tvProgress
             binding.tvDate.text = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(workout.date)
-            binding.tvNotes.text = workout.notes ?: "-"
+            binding.tvNotes.text = workout.notes?.takeIf { it.isNotBlank() } ?: "No notes"
 
             binding.btnDelete.setOnClickListener {
                 onDeleteClick(workout)
