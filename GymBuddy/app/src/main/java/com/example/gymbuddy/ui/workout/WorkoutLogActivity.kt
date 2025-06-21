@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/gymbuddy/ui/workout/WorkoutLogActivity.kt
 package com.example.gymbuddy.ui.workout
 
 import android.app.TimePickerDialog
@@ -7,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.gymbuddy.R // Pastikan R diimpor
 import com.example.gymbuddy.data.local.GymDatabase
 import com.example.gymbuddy.data.repository.WorkoutRepository
 import com.example.gymbuddy.databinding.ActivityWorkoutLogBinding
@@ -44,21 +44,20 @@ class WorkoutLogActivity : AppCompatActivity() {
     }
 
     private fun setupSpinners() {
-        // Data dummy for dropdown (replace with data from database if needed)
         val exerciseNames = arrayOf("Bench Press", "Squat", "Deadlift", "Overhead Press", "Barbell Row", "Bicep Curl", "Tricep Extension", "Leg Press", "Lat Pulldown")
         val workoutTypes = arrayOf("Cardio", "Strength", "HIIT", "Flexibility", "Endurance", "Bodyweight")
         val scheduleDays = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
-        val exerciseAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, exerciseNames)
-        exerciseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val exerciseAdapter = ArrayAdapter(this, R.layout.custom_spinner_item, exerciseNames)
+        exerciseAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
         binding.spinnerExerciseName.adapter = exerciseAdapter
 
-        val workoutTypeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, workoutTypes)
-        workoutTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val workoutTypeAdapter = ArrayAdapter(this, R.layout.custom_spinner_item, workoutTypes)
+        workoutTypeAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
         binding.spinnerWorkoutType.adapter = workoutTypeAdapter
 
-        val scheduleDayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, scheduleDays)
-        scheduleDayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val scheduleDayAdapter = ArrayAdapter(this, R.layout.custom_spinner_item, scheduleDays)
+        scheduleDayAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
         binding.spinnerScheduleDay.adapter = scheduleDayAdapter
     }
 
@@ -94,8 +93,8 @@ class WorkoutLogActivity : AppCompatActivity() {
                 val scheduleDay = binding.spinnerScheduleDay.selectedItem.toString()
                 val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(selectedTime.time)
                 val progress = binding.etProgress.text.toString().trim()
-                val durationMinutes = binding.etDurationMinutes.text.toString().toIntOrNull() // Get duration
-                val caloriesBurned = binding.etCaloriesBurned.text.toString().toDoubleOrNull() // Get calories
+                val durationMinutes = binding.etDurationMinutes.text.toString().toIntOrNull()
+                val caloriesBurned = binding.etCaloriesBurned.text.toString().toDoubleOrNull()
                 val notes = binding.etNotes.text.toString().trim().takeIf { it.isNotBlank() }
 
                 workoutViewModel.addWorkout(
@@ -106,10 +105,10 @@ class WorkoutLogActivity : AppCompatActivity() {
                     time,
                     progress,
                     notes,
-                    durationMinutes, // Pass duration
-                    caloriesBurned // Pass calories
+                    durationMinutes,
+                    caloriesBurned
                 )
-                finish() // Finish the activity after saving
+                finish()
             }
         }
     }
@@ -120,7 +119,6 @@ class WorkoutLogActivity : AppCompatActivity() {
             binding.etProgress.error = "Progress is required"
             isValid = false
         }
-        // Optional: Add more specific validation for duration and calories if needed
         return isValid
     }
 }

@@ -12,12 +12,15 @@
         android:title="Activity" />
 
     <item
-        android:id="@+id/navigation_placeholder"
+        android:id="@+id/navigation_empty_space"
         android:title=""
-        android:enabled="false"/> <item
-    android:id="@+id/navigation_community"
-    android:icon="@drawable/ic_community"
-    android:title="Community" />
+        android:enabled="false"
+        android:checkable="false" />
+
+    <item
+        android:id="@+id/navigation_community"
+        android:icon="@drawable/ic_community"
+        android:title="Community" />
 
     <item
         android:id="@+id/navigation_profile"
