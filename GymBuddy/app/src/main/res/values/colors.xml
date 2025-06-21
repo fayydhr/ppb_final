@@ -10,7 +10,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="blue">#007BFF</color>
 
-    <color name="primary_dark_bg">#0D0D0D</color>    <color name="secondary_dark_bg">#1F1F1F</color>   <color name="card_bg_dark">#2A2A2C</color>        <color name="text_primary">#FFFFFF</color>         <color name="text_secondary">#B0B0B0</color>       <color name="highlight_accent">#0A84FF</color>    <color name="button_text_dark">#000000</color>     <color name="accent_blue">#0A84FF</color>         <color name="dark_green_bg">#1A2B27</color>
+    <color name="primary_dark_bg">#0D0D0D</color>    <color name="secondary_dark_bg">#1F1F1F</color>   <color name="card_bg_dark">#2A2A2C</color>        <color name="text_primary">#FFFFFF</color>         <color name="text_secondary">#B0B0B0</color>       <color name="highlight_accent">#FF9800</color>    <color name="button_text_dark">#000000</color>     <color name="accent_blue">#0A84FF</color>         <color name="dark_green_bg">#1A2B27</color>
     <color name="light_green">#3CD94C</color>
     <color name="input_bg_dark_green">#2A3F39</color>
     <color name="input_border_dark_green">#4A5F59</color>
@@ -22,4 +22,5 @@
     <color name="input_field_border">#3A3A3C</color>
 
 
-    <color name="dark_background">#121212</color>      <color name="darker_background">#000000</color>    <color name="primary_orange">#FF9800</color>      <color name="primary_orange_light">#FFB74D</color> <color name="text_primary_light">#FFFFFF</color>   <color name="text_secondary_light">#B0B0B0</color> <color name="card_background">#1E1E1E</color>      <color name="button_primary">#FF9800</color>      <color name="button_primary_text">#FFFFFF</color> <color name="icon_inactive">#757575</color>        </resources>
+    <color name="dark_background">#121212</color>      <color name="darker_background">#000000</color>    <color name="primary_orange">#FF9800</color>      <color name="primary_orange_light">#FFB74D</color> <color name="text_primary_light">#FFFFFF</color>   <color name="text_secondary_light">#B0B0B0</color> <color name="card_background">#1E1E1E</color>      <color name="button_primary">#FF9800</color>      <color name="button_primary_text">#FFFFFF</color> <color name="icon_inactive">#757575</color>
+</resources>

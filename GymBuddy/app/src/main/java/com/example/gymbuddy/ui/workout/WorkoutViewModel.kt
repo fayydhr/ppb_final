@@ -1,6 +1,6 @@
-// app/src/main/java/com/example/gymbuddy/ui/workout/WorkoutViewModel.kt
 package com.example.gymbuddy.ui.workout
 
+import android.util.Log // Import Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +23,9 @@ class WorkoutViewModel(private val workoutRepository: WorkoutRepository) : ViewM
 
     fun loadWorkouts(userId: Int) {
         viewModelScope.launch {
+            Log.d("WorkoutViewModel", "Loading workouts for userId: $userId") // LOG
             val workouts = workoutRepository.getWorkoutsByUserId(userId)
+            Log.d("WorkoutViewModel", "Loaded ${workouts.size} workouts for userId: $userId") // LOG
             _workouts.postValue(workouts)
         }
     }
@@ -36,12 +38,14 @@ class WorkoutViewModel(private val workoutRepository: WorkoutRepository) : ViewM
         time: String,
         progress: String?,
         notes: String? = null,
-        durationMinutes: Int? = null, // NEW
-        caloriesBurned: Double? = null // NEW
+        durationMinutes: Int? = null,
+        caloriesBurned: Double? = null
     ) {
         viewModelScope.launch {
             if (exerciseName.isEmpty() || workoutType.isEmpty() || scheduleDay.isEmpty() || time.isEmpty() || progress.isNullOrEmpty()) {
-                _operationResult.postValue(OperationResult.Error("Please fill all required fields: Exercise Name, Workout Type, Schedule Day, Time, and Progress."))
+                val errorMessage = "Please fill all required fields: Exercise Name, Workout Type, Schedule Day, Time, and Progress."
+                _operationResult.postValue(OperationResult.Error(errorMessage))
+                Log.e("WorkoutViewModel", "Add Workout Validation Error: $errorMessage") // LOG Error
                 return@launch
             }
 
@@ -53,12 +57,13 @@ class WorkoutViewModel(private val workoutRepository: WorkoutRepository) : ViewM
                 time = time,
                 progress = progress,
                 notes = notes,
-                durationMinutes = durationMinutes, // Pass the new field
-                caloriesBurned = caloriesBurned // Pass the new field
+                durationMinutes = durationMinutes,
+                caloriesBurned = caloriesBurned
             )
             workoutRepository.insertWorkout(workout)
             _operationResult.postValue(OperationResult.Success)
-            loadWorkouts(userId)
+            Log.d("WorkoutViewModel", "Workout added successfully for userId: $userId") // LOG Success
+            loadWorkouts(userId) // Panggil loadWorkouts setelah menambahkan untuk memperbarui daftar
         }
     }
 
@@ -66,6 +71,8 @@ class WorkoutViewModel(private val workoutRepository: WorkoutRepository) : ViewM
         viewModelScope.launch {
             workoutRepository.deleteWorkout(workoutId)
             _operationResult.postValue(OperationResult.Success)
+            Log.d("WorkoutViewModel", "Workout with ID $workoutId deleted successfully") // LOG Success
+            // Perbarui daftar setelah penghapusan
             _workouts.value?.let { workouts ->
                 loadWorkouts(workouts.firstOrNull()?.userId ?: -1)
             }

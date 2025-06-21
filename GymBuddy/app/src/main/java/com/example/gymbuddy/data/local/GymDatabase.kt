@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 
-@Database(entities = [User::class, Workout::class, Schedule::class], version = 6, exportSchema = false) // Increment version here!
+@Database(entities = [User::class, Workout::class, Schedule::class], version = 6, exportSchema = false) // Pastikan version telah di-increment jika ada perubahan skema
 abstract class GymDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun workoutDao(): WorkoutDao
@@ -23,7 +23,7 @@ abstract class GymDatabase : RoomDatabase() {
                     GymDatabase::class.java,
                     "gym_database"
                 )
-                    .fallbackToDestructiveMigration() // Keep this for development
+                    .fallbackToDestructiveMigration() // Ini akan menghapus data lama setiap kali versi diubah
                     .build()
                 INSTANCE = instance
                 instance

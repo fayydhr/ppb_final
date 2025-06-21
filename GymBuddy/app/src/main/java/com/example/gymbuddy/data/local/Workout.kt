@@ -10,12 +10,12 @@ data class Workout(
     val id: Int = 0,
     val userId: Int,
     val exerciseName: String,
-    val workoutType: String, // NEW
-    val scheduleDay: String, // NEW
-    val time: String,        // NEW
-    val progress: String?,   // Changed from sets, reps, weight
+    val workoutType: String,
+    val scheduleDay: String,
+    val time: String,
+    val progress: String?,
     val date: Long = System.currentTimeMillis(),
-    val notes: String? = null, // Keep notes if you still want them as optional
-    val durationMinutes: Int? = null, // NEW: For workout duration
-    val caloriesBurned: Double? = null // NEW: For calories burned
+    val notes: String? = null,
+    val durationMinutes: Int? = null,
+    val caloriesBurned: Double? = null
 )

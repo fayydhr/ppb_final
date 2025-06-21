@@ -130,9 +130,9 @@ class HomeFragment : Fragment() {
 
         // Data dummy untuk popular workouts (contoh yang sama dari sebelumnya)
         val dummyPopularWorkouts = listOf(
-            PopularWorkout("Bench Press Master", "Advanced", "60 Minute", R.drawable.ic_default_profile),
-            PopularWorkout("Full Body HIIT", "Intermediate", "30 Minute", R.drawable.ic_community),
-            PopularWorkout("Yoga for Flexibility", "Beginner", "45 Minute", R.drawable.ic_home)
+            PopularWorkout("Bench Press Master", "Advanced", "60 Minute", R.drawable.ic_1),
+            PopularWorkout("Full Body HIIT", "Intermediate", "30 Minute", R.drawable.ic_2),
+            PopularWorkout("Yoga for Flexibility", "Beginner", "45 Minute", R.drawable.ic_3)
         )
         popularWorkoutAdapter.submitList(dummyPopularWorkouts)
     }

@@ -2,11 +2,12 @@ package com.example.gymbuddy.ui.workout
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log // Import Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.gymbuddy.R // Pastikan R diimpor
+import com.example.gymbuddy.R
 import com.example.gymbuddy.data.local.GymDatabase
 import com.example.gymbuddy.data.repository.WorkoutRepository
 import com.example.gymbuddy.databinding.ActivityWorkoutLogBinding
@@ -28,6 +29,7 @@ class WorkoutLogActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         userId = intent.getIntExtra("USER_ID", -1)
+        Log.d("WorkoutLogActivity", "onCreate: userId = $userId") // LOG
         if (userId == -1) {
             Snackbar.make(binding.root, "User ID not found.", Snackbar.LENGTH_LONG).show()
             finish()
@@ -97,6 +99,7 @@ class WorkoutLogActivity : AppCompatActivity() {
                 val caloriesBurned = binding.etCaloriesBurned.text.toString().toDoubleOrNull()
                 val notes = binding.etNotes.text.toString().trim().takeIf { it.isNotBlank() }
 
+                Log.d("WorkoutLogActivity", "Attempting to add workout for userId: $userId") // LOG
                 workoutViewModel.addWorkout(
                     userId,
                     exerciseName,
@@ -108,7 +111,9 @@ class WorkoutLogActivity : AppCompatActivity() {
                     durationMinutes,
                     caloriesBurned
                 )
-                finish()
+                finish() // Menutup aktivitas setelah menyimpan
+            } else {
+                Log.w("WorkoutLogActivity", "Validation failed. Workout not added.") // LOG Warn
             }
         }
     }

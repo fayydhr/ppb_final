@@ -9,7 +9,8 @@ import com.example.gymbuddy.ui.login.LoginViewModel
 import com.example.gymbuddy.ui.register.RegisterViewModel
 import com.example.gymbuddy.ui.workout.WorkoutViewModel
 import com.example.gymbuddy.ui.statistics.StatisticsViewModel
-import com.example.gymbuddy.ui.main.fragments.HomeViewModel // Tambahkan ini
+import com.example.gymbuddy.ui.main.fragments.HomeViewModel
+import com.example.gymbuddy.ui.main.fragments.ProfileViewModel // Tambahkan ini
 
 class ViewModelFactory(
     private val userRepository: UserRepository? = null,
@@ -30,8 +31,11 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(StatisticsViewModel::class.java) -> {
                 StatisticsViewModel(workoutRepository ?: throw IllegalArgumentException("WorkoutRepository required")) as T
             }
-            modelClass.isAssignableFrom(HomeViewModel::class.java) -> { // Tambahkan kondisi ini
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(workoutRepository ?: throw IllegalArgumentException("WorkoutRepository required for HomeViewModel")) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> { // Tambahkan kondisi ini
+                ProfileViewModel(userRepository ?: throw IllegalArgumentException("UserRepository required for ProfileViewModel")) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
