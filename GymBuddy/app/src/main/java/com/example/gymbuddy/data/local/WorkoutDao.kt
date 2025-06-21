@@ -18,17 +18,24 @@ interface WorkoutDao {
     suspend fun deleteWorkout(workoutId: Int)
 
     // New queries for statistics
-    // Get total duration per day/week for a user
     @Query("SELECT date, SUM(durationMinutes) AS totalDuration FROM workouts WHERE userId = :userId AND durationMinutes IS NOT NULL GROUP BY strftime('%Y-%m-%d', date / 1000, 'unixepoch') ORDER BY date ASC")
     suspend fun getDailyWorkoutDurations(userId: Int): List<DailyDuration>
 
-    // Get total calories burned per week for a user
     @Query("SELECT strftime('%Y-%W', date / 1000, 'unixepoch') AS week, SUM(caloriesBurned) AS totalCalories FROM workouts WHERE userId = :userId AND caloriesBurned IS NOT NULL GROUP BY week ORDER BY week ASC")
     suspend fun getWeeklyCaloriesBurned(userId: Int): List<WeeklyCalories>
 
-    // Get count of workout types for a user
     @Query("SELECT workoutType, COUNT(*) AS count FROM workouts WHERE userId = :userId GROUP BY workoutType")
     suspend fun getWorkoutTypeDistribution(userId: Int): List<WorkoutTypeCount>
+
+    // === NEW QUERIES FOR HOME SCREEN SUMMARY ===
+    @Query("SELECT COUNT(*) FROM workouts WHERE userId = :userId")
+    suspend fun getTotalWorkoutsCount(userId: Int): Int
+
+    @Query("SELECT SUM(caloriesBurned) FROM workouts WHERE userId = :userId AND caloriesBurned IS NOT NULL")
+    suspend fun getTotalCaloriesBurned(userId: Int): Double?
+
+    @Query("SELECT SUM(durationMinutes) FROM workouts WHERE userId = :userId AND durationMinutes IS NOT NULL")
+    suspend fun getTotalWorkoutMinutes(userId: Int): Int?
 }
 
 // Data classes to hold results of aggregated queries

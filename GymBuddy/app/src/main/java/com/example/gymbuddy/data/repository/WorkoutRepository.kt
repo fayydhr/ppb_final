@@ -33,4 +33,17 @@ class WorkoutRepository(private val workoutDao: WorkoutDao) {
     suspend fun getWorkoutTypeDistribution(userId: Int): List<WorkoutTypeCount> {
         return workoutDao.getWorkoutTypeDistribution(userId)
     }
+
+    // === NEW FUNCTIONS FOR HOME SCREEN SUMMARY ===
+    suspend fun getTotalWorkoutsCount(userId: Int): Int {
+        return workoutDao.getTotalWorkoutsCount(userId)
+    }
+
+    suspend fun getTotalCaloriesBurned(userId: Int): Double? {
+        return workoutDao.getTotalCaloriesBurned(userId)
+    }
+
+    suspend fun getTotalWorkoutMinutes(userId: Int): Int? {
+        return workoutDao.getTotalWorkoutMinutes(userId)
+    }
 }
